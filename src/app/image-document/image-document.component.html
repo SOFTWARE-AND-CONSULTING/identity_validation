@@ -1,0 +1,74 @@
+<div class="block-main justify-content-center" style="background-color:rgba(217, 213, 245, 0.384)">
+  <div class="img row justify-content-center" >
+    <div class=" col-12">
+
+        <div class="col-12 title text-center" style="color: black;">
+          {{imageFront ? 'Suba la imagen frontal de la cédula': 'Suba la imagen posterior de la cédula'}}
+
+        </div><br><br>
+        <div class="col-12 text-center" >
+
+          <span class="text-justify" style="color: black;">Ten presente que este documento debe estar en formato JPG y debe ser de máximo 15MB.</span><br>
+        </div><br><br>
+
+
+        <div class="col-12 rounded text-center">
+          <img (click)="fileUpload.click()" style="border-radius: 20px; cursor: pointer; margin: 0 auto" width="200px" [src]="imageFront ? '../assets/imgs/cedula-frente-pag.png': '../assets/imgs/cedula-atras-pag.png'" alt="">
+        </div><br><br><br>
+        <div class="row justify-content-center" *ngIf="imageFront">
+          <div class="col-md-6">
+              <div class="text-center">
+                  <label>Digite el número de su cédula</label>
+                  <input type="number" style="background-color:rgba(217, 213, 245, 0.384)" maxlength="12" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                  class="form-control" name= "inicio" [(ngModel)]="numeroCedula" required>
+
+              </div>
+          </div>
+
+
+      </div><br><br>
+        <!-- <div class="col-12 rounded text-center">
+          <input type="number" maxlength="4" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+        </div> -->
+        <input
+          id="file"
+          type="file"
+          accept="image/*"
+          multiple
+          (change)="incomingfile($event)"
+          class="file-input"
+          #fileUpload
+        />
+        <div class="file-upload text-center" style="color: black;">
+
+          {{file?.name || "Aún no ha subido un archivo."}}
+
+            <button color="primary" class="upload-btn" id="boton" style="background-color: #726add15"
+              (click)="fileUpload.click()">
+                <i style="color: #726addbf" class="fa fa-plus-square fa-2x"></i>
+
+            </button>
+        </div><br>
+        <div class="col-12 text-center" *ngIf="preview">
+          <img style="border-radius: 20px"  width="250px" [src]="preview" alt="">
+        </div><br>
+        <div class="row mt-3 text-center">
+          <div class="{{imageFront ? 'col-12' : 'col-6'}} text-center" *ngIf="!documentsOk">
+            <button type="submit" [disabled]="!file" class="btn btn-md" id="boton" (click)="imageFront ? subirFrontal() : SubirImgT()" style="color: #726add;" ><i class="fa fa-save" style="color: #726add;">
+            </i> {{imageFront ? 'Subir imagen frontal': 'Subir imagen posterior'}}</button>
+          </div>
+          <div class="col-6 text-center" *ngIf="documentsOk">
+            <button type="submit" [disabled]="!file" class="btn btn-md" id="boton" (click)="SubirDocumentos()" style="color: #726add;" ><i class="fa fa-save" style="color: #726add;">
+            </i>  Enviar documento</button>
+          </div>
+            <div class="{{imageFront ? 'col-12' : 'col-6'}} text-center" *ngIf="!imageFront || documentsOk">
+              <button type="submit"  class="btn btn-md " (click)="atras()" id="boton" style="color: #726adde6;"><i class="fa fa-save" style="color: #726adde6;">
+                </i> Volver</button>
+            </div>
+        </div>
+
+    </div>
+
+  </div>
+</div>
+

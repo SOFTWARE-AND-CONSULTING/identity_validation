@@ -1,0 +1,100 @@
+$border-color: #f1f1f1;
+
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep {
+  .space-preview{
+    canvas{
+      position: relative;
+      width: 100%;
+      height: 25rem;
+    }
+  }
+
+  .canvas-preview{
+    position: relative;
+    canvas {
+      width: 100%;
+    }
+  }
+
+}
+
+.block-expression{
+  padding: .5rem;
+  .value-number{
+    color: blue;
+  }
+}
+
+
+
+  .block-main {
+    display: grid;
+    height: calc(100% - 3.5rem);
+    /* grid-template-columns: 4fr 4fr; */
+
+
+    .cam {
+      position: relative;
+      .placeholder{
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+      //background-color: red;
+    }
+
+    .sidebar {
+      border-left: solid 1px $border-color;
+      //background-color: green;
+      display: grid;
+      /* grid-template-columns: 2fr 2fr; */
+
+      .zone-body{
+        padding: 0;
+        display: grid;
+        grid-template-rows: 2fr 4fr;
+        .block{
+          padding: 1rem;
+          border-top: solid 1px $border-color;
+          &:first-child{
+            border-top: 0;
+          }
+          //background-color: red;
+        }
+        //background-color: green;
+      }
+
+      .zone-btn{
+        //background-color: red;
+        border-left: solid 1px $border-color;
+      }
+
+      .list-btn{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 1.5rem;
+        li{
+          height: 5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+
+.link-github{
+  cursor: pointer;
+  text-decoration: none;
+  color: #222222;
+}
+
+

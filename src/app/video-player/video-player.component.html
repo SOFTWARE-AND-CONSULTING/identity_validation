@@ -1,0 +1,25 @@
+<div *ngIf="modelsReady" style="background-color:rgba(217, 213, 245, 0.384)">
+  <video #videoElement
+         [style.width]="width+'px'"
+         [style.height]="height+'px'"
+         (loadedmetadata)="loadedMetaData()"
+         (play)="listenerPlay()"
+         *ngIf="stream"
+         [srcObject]="stream">
+  </video>
+</div>
+<div *ngIf="!modelsReady" style="background-color:rgba(217, 213, 245, 0.384)">
+  Cargando modelos......
+</div>
+
+
+<!--- ******************* ZONE FILTERS ***************** -->
+<!-- <div class="filters" *ngFor="let filter of filters">
+  <div class="filter-eye filter-question" *ngIf="filter.type === 'question'">
+    <span [innerHTML]="filter?.question"></span>
+  </div>
+  <div class="filter-eye filter-image" *ngIf="filter.type === 'image'">
+    <img src="../../assets/filters/{{filter.image}}" alt="">
+  </div>
+</div>
+ -->

@@ -1,0 +1,36 @@
+<div class="block-main">
+  <div class="cam" >
+    <app-video-player
+      [width]="700"
+      [height]="500"
+      [stream]="currentStream">
+    </app-video-player>
+  </div>
+
+  <div class="sidebar">
+    <div class="zone-body">
+      <div class="block">
+        <div><b>Estado de ánimo</b></div>
+        <div class="block-expression">
+          <div >
+            <span>  </span><span class="value-number" *ngIf="!NextLiveDatection">{{neutral ? 'MIre a la camara y haga una cara neutral': ''}}</span>
+            <span *ngIf="NextLiveDatection">{{liveDetectionRandom()}}</span>
+            <span >  </span><span class="value-number"  *ngIf="NextLiveDatection"> {{valorRandom?.name== 'happy' ? 'Ahora haga una sonriza': 'Ahora abra la boca en forma de sorprensa'}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <div><b></b></div>
+        <div class="canvas-preview"></div>
+      </div>
+    </div>
+    <div class="zone-btn">
+      <ul class="list-btn">
+        <li *ngFor="let btn of [1,1,1]">
+          <!-- <i class="uil uil-emoji"></i> -->
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
