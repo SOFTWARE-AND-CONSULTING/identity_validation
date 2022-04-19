@@ -34,6 +34,12 @@ export class FinalizacionProcesoComponent implements OnInit {
         this.videoElement.nativeElement.pause();
         this.videoPlayerService.rekognition = false;
         this.videoPlayerService.documentosOk = false;
+        localStorage.setItem('documentOk', '');
+        localStorage.setItem('rekognition', '');
+        localStorage.setItem('cedula', '');
+        localStorage.setItem('token', '');
+        localStorage.setItem('tokenUser', '');
+        localStorage.setItem('validationId', '');
         window.location.reload();
       }
     });
@@ -44,6 +50,12 @@ export class FinalizacionProcesoComponent implements OnInit {
     this.videoElement.nativeElement.pause();
     this.videoPlayerService.rekognition = false;
     this.videoPlayerService.documentosOk = false;
+    localStorage.setItem('documentOk', '')
+    localStorage.setItem('rekognition', '');
+    localStorage.setItem('cedula', '');
+    localStorage.setItem('token', '');
+    localStorage.setItem('tokenUser', '');
+    localStorage.setItem('validationId', '');
     window.location.reload();
 
   }

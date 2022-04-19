@@ -16,8 +16,9 @@ export class DocumentOkGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-
-      if (!this.videoPlayerService.documentosOk) {
+      console.log(this.videoPlayerService.documentosOk);
+      let documentosOK =localStorage.getItem('documentOk')
+      if (!documentosOK) {
         return this.router.navigate(['']).then(() => false);
       }
     return true;

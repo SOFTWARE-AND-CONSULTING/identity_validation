@@ -10,16 +10,16 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  post(path: string, data: any): any {
-    const headers = new HttpHeaders(
+  post(path: string, data: any, headers:any): any {
+    /* const headers = new HttpHeaders(
       {
         "type": "FRONT",
         "contentType": "image/jpg",
         "extension": "jpg",
         "documentType": "CC"
     }
-    );
-    return this.http.post<any>(`${environment.URL}${path}`,{headers: headers}).pipe(map(d => d));
+    ); */
+    return this.http.post<any>(`${environment.URL}${path}`,data, headers).pipe(map(d => d));
   }
 
   get(path: string): any {
@@ -30,8 +30,8 @@ export class ApiService {
     return this.http.delete<any>(`${environment.URL}${path}`).pipe(map(d => d));
   }
 
-  put(path: string, data: any): any {
-    return this.http.put<any>(`${environment.URL}${path}`, data).pipe(map(d => d));
+  put(path: string, data: any, headers:any): any {
+    return this.http.put<any>(`${path}`, data, headers).pipe(map(d => d));
   }
 
 }

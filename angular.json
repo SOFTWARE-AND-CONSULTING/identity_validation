@@ -134,6 +134,46 @@
           }
         }
       }
+    },
+    "rekognition-fabioarias": {
+      "projectType": "library",
+      "root": "projects/rekognition-fabioarias",
+      "sourceRoot": "projects/rekognition-fabioarias/src",
+      "prefix": "rba",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/rekognition-fabioarias/tsconfig.lib.json",
+            "project": "projects/rekognition-fabioarias/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/rekognition-fabioarias/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/rekognition-fabioarias/src/test.ts",
+            "tsConfig": "projects/rekognition-fabioarias/tsconfig.spec.json",
+            "karmaConfig": "projects/rekognition-fabioarias/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/rekognition-fabioarias/tsconfig.lib.json",
+              "projects/rekognition-fabioarias/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "faces-recognition"

@@ -16,8 +16,8 @@ export class RekognitionGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-      if (!this.videoPlayerService.rekognition) {
+      let rekognition =localStorage.getItem('rekognition')
+      if (!rekognition) {
         return this.router.navigate(['']).then(() => false);
       }
     return true;

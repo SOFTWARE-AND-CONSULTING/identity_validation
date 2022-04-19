@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  URL:'https://api-staging-iku.fabioarias.co/'
+  URL:'https://api-staging-iku.fabioarias.co/',
+  ELOGIN: 'fharias@gmail.com',
+  PLOGIN: 'C0lombia**'
 };
 
 /*

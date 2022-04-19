@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { VideoPlayerService } from '../video-player.service';
 import * as toastFire from '../../assets/js/toast.js';
 import Swal from 'sweetalert2';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 import * as $ from 'jquery';
 import { reject } from 'lodash';
 import { loadingFireToast } from "src/assets/js/toast";
 import { ApiService } from '../services/api.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-image-document',
@@ -25,13 +26,34 @@ export class ImageDocumentComponent implements OnInit {
   imageFront: boolean=true;
   documentsOk: boolean=false;
   numeroCedula:any='';
+  token: any='';
+  idValidacion: any;
   constructor(
     private apiService: ApiService,
     public videoPlayerService: VideoPlayerService,
     private sanitizer: DomSanitizer,
     private router: Router,) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    const body = {
+      email: environment.ELOGIN,
+      password: environment.PLOGIN
+    }
+    await this.apiService.post('login', body, '').subscribe(
+      async (res: any) => {
+
+        if (res.status == false) toastFire.toastFireError(res);
+        else {
+          this.token = res.data
+          localStorage.setItem('token', `${this.token}`)
+
+        }
+      },
+      (error: any) => {
+        console.log('error enviando documento', error);
+        toastFire.toastFireError(error);
+      }
+    );
   }
 
   async incomingfile(event:any) {
@@ -41,7 +63,10 @@ export class ImageDocumentComponent implements OnInit {
     this.extraerBase64(this.file).then((imagen:any) => {
       this.preview = imagen.base;
 
+
+
     })
+
 
 }
 atras(){
@@ -52,36 +77,75 @@ atras(){
   this.imageFront = !this.imageFront;
   this.filesUploadFront = [];
 }
+
+
 async subirFrontal() {
-  this.filesUploadFront.push(this.file);
-  this.headersFront = {
-    type: "FRONT",
-    contentType: "image/png",
-    extension: "jpg",
-    documentType: "CC"
-  }
-  console.log(this.filesUploadFront, this.numeroCedula);
-  const loading: any = loadingFireToast(
-    'Creando franja, por favor espere...'
-  );
-  await this.apiService.post(`add-dni-person/CC${this.numeroCedula}`, this.headersFront).subscribe(
-    async (res: any) => {
-      loading.close();
-      console.log(res.message);
 
-      if (res.status == false) toastFire.toastFireError(res);
-      else {
-        console.log(res);
+    var image = this.urltoFile(this.preview, `image.jpg`, "image/jpg")
+    image.then(async (img:any)=> {
 
-
+      this.headersFront = {
+        type: "FRONT",
+        contentType: "image/jpg",
+        extension: "jpg",
+        documentType: "CC"
       }
-    },
-    (error: any) => {
-      loading.close();
-      console.log('error enviando documento', error);
-      toastFire.toastFireError(error);
-    }
-  );
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer '+this.token
+        })
+      };
+      const loading: any = loadingFireToast(
+        'Cargando documento, por favor espere...'
+      );
+
+      await this.apiService.post(`add-dni-person/CC${this.numeroCedula}`, this.headersFront, httpOptions).subscribe(
+        async (res: any) => {
+          loading.close();
+          console.log(res);
+
+
+          if (res.status == false) toastFire.toastFireError(res);
+          else {
+            this.idValidacion = res.data.validationId;
+            localStorage.setItem('validationId', this.idValidacion)
+            const httpOptionsPut = {
+              headers: new HttpHeaders({
+                'Content-Type':"image/jpg",
+              })
+            };
+            await this.apiService.put(res.data.uploadUrl, img, httpOptionsPut).subscribe(
+              async (res: any) => {
+                loading.close();
+
+                //if (res.status == false) toastFire.toastFireError(res);
+                //else {
+                  //console.log(res);
+
+
+                //}
+              },
+              (error: any) => {
+                loading.close();
+                console.log('error enviando documento', error);
+                toastFire.toastFireError(error);
+              }
+            );
+
+          }
+        },
+        (error: any) => {
+          loading.close();
+          console.log('error enviando documento', error);
+          toastFire.toastFireError(error);
+        }
+      );
+
+    });
+
+
+
+
   this.imageFront = false
   this.file = null;
   this.preview = '';
@@ -89,17 +153,88 @@ async subirFrontal() {
 }
 
 async SubirImgT(){
-  this.filesUploadBack.push(this.file);
-  this.imageFront = false
-  this.documentsOk = true;
-  this.videoPlayerService.documentosOk = true;
+  var image = this.urltoFile(this.preview, `image.jpg`, "image/jpg")
+    image.then(async (img:any)=> {
+      this.headersFront = {
+        type: "BACK",
+        contentType: "image/jpg",
+        extension: "jpg",
+        documentType: "CC",
+        validationId: `${this.idValidacion}`
+      }
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer '+this.token
+        })
+      };
+
+      const loading: any = loadingFireToast(
+        'Cargando documento, por favor espere...'
+      );
+      await this.apiService.post(`add-dni-person/CC${this.numeroCedula}`, this.headersFront, httpOptions).subscribe(
+        async (res: any) => {
+          loading.close();
+
+            this.imageFront = false
+            this.documentsOk = true;
+            this.videoPlayerService.documentosOk = true;
+            localStorage.setItem('documentOk', 'true');
+            localStorage.setItem('cedula', `${this.numeroCedula}`)
+          if (res.status == false) toastFire.toastFireError(res);
+          else {
+            const httpOptionsPut = {
+              headers: new HttpHeaders({
+                'Content-Type': "image/jpg",
+              })
+            };
+
+            await this.apiService.put(res.data.uploadUrl, img, httpOptionsPut).subscribe(
+              async (res: any) => {
+                loading.close();
+
+                /* if (res.status == false) toastFire.toastFireError(res);
+                else {
+                  console.log(res);
+
+
+                } */
+              },
+              (error: any) => {
+                loading.close();
+                console.log('error enviando documento', error);
+                toastFire.toastFireError(error);
+              }
+            );
+
+          }
+        },
+        (error: any) => {
+          loading.close();
+          console.log('error enviando documento', error);
+          toastFire.toastFireError(error);
+        }
+      );
+    });
+
+
+
+
   //this.videoPlayerService.cargaDocOk = true;
 
 
 
 }
 
+urltoFile(url, filename, mimeType){
+  return (fetch(url)
+      .then(function(res){return res.arrayBuffer();})
+      .then(function(buf){return new File([buf], filename, {type:mimeType});})
+  );
+}
+
 SubirDocumentos() {
+  console.log(this.videoPlayerService.documentosOk);
+
   let data = new FormData();
   data.append('file', this.file);
   this.router.navigate(['/rekognition']);

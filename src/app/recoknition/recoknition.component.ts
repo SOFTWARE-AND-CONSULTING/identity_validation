@@ -36,6 +36,12 @@ export class RecoknitionComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+
+    if(this.videoPlayerService.documentosOk){
+      window.location.href = window.location.href = "/rekognition";
+      this.videoPlayerService.documentosOk = false
+    }
+
     this.listenerEvents();
     this.checkMediaSource();
     this.getSizeCam();
@@ -117,6 +123,7 @@ export class RecoknitionComponent implements OnInit, OnDestroy {
         if(item.value >0.99){
           this.pruebaVida = true;
           this.videoPlayerService.rekognition = true;
+          localStorage.setItem('rekognition', 'true');
         }
       }
     });
@@ -124,6 +131,7 @@ export class RecoknitionComponent implements OnInit, OnDestroy {
     if(this.pruebaVida){
       console.log('verificación ok');
       this.videoPlayerService.pruebaVida = true;
+      localStorage.setItem('rekognition', 'true');
       this.verificacionOk = true;
 
       this.router.navigate(['/finalizacion']);

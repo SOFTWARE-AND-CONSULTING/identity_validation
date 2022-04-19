@@ -15,6 +15,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "paths": {
+      "rekognition-fabioarias": [
+        "dist/rekognition-fabioarias/rekognition-fabioarias",
+        "dist/rekognition-fabioarias"
+      ]
+    },
     "target": "es2015",
     "module": "es2020",
     "lib": [

@@ -10,19 +10,24 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'documentos',
     component: ImageDocumentComponent
   },
   {
     path: 'rekognition',
-    /* canActivate: [DocumentOkGuard], */
+    canActivate: [DocumentOkGuard],
     component: RecoknitionComponent,
   },
   {
     path: 'finalizacion',
     canActivate: [RekognitionGuard],
     component: FinalizacionProcesoComponent,
-  }
+  },
+  {
+    path: '**',
+    redirectTo: '/documentos',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
