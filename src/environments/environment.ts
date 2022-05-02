@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   URL:'https://api-staging-iku.fabioarias.co/',
-  ELOGIN: 'kalebsampaco@gmail.com',
+  ELOGIN: 'demo1@gmail.com',
   PLOGIN: 'Demo123*'
 };
 
