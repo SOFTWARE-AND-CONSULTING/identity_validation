@@ -56,7 +56,8 @@ Estas dos variables se usaran para:
     email: environment.ELOGIN,
     password: environment.PLOGIN
   }
-  await this.apiService.post('login', body, '')`
+  await this.apiService.post('login', body, '')`.
+  5. Después de realizar el login se guarda el token en el localStorage con el que se realizará el proceso de subir las imágenes.
 
 **En la carpeta assets/postman se puede descargar los archivos json de postman (IKU API.postman_collection) y (IKU CUSTOM DOMAIN STAGING.postman_environment) para realizar tambien el registro de usuario y todas las validaciones con la subida de imagenes de documento de identidad**
 
