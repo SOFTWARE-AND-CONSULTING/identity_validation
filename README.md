@@ -30,6 +30,37 @@ El proyecta tiene la siguiente estructura de carpetas:
     * assets
     * environments
 
+## Crear un usuario para subir imagenes
+
+Primero debe cambiar en la carpeta environments las variables que se usaran como el usuario y el password:
+
+```
+ELOGIN: 'demo1@gmail.com',
+PLOGIN: 'Demo123* 
+```
+
+Estas dos variables se usaran para:
+
+* para realizar el registro y login de un usuario y clave
+   1. en el componente **image-document** se tendrá que descomentar la función de registro `registro()` en el `ngOnInit()` para realizar el registro de un usuario.
+   2. Luego de esto se envirá un codigo al correo registrado para usarlo ahora con la función `verificarEmail()` en `ngOnInit()`. Se debe cambiar el número en esta función `const verificar = {
+        email:environment.ELOGIN,
+        code: 123456
+    }
+    await this.apiService.post('confirm-code', verificar, '')`.
+   3. Si se pasa el tiempo de validación del código esta la función `reSendCode()` en el que se le enviará el email que se configuró. `const reSend = {
+        email:environment.ELOGIN,
+    }
+    await this.apiService.post('resend-code', reSend, '')`.
+   4. Si todo el proceso se realizó correctamente entonces se debe descomentar la función `login()`, y comentar las demás funciones en el `ngOnInit()`, para realizar el login con el usuario creado.
+
+**En la carpeta assets/postman se puede descargar los archivos json de postman (IKU API.postman_collection) y (IKU CUSTOM DOMAIN STAGING.postman_environment) para realizar tambien el registro de usuario y todas las validaciones con la subida de imagenes de documento de identidad**
+
+<h1><img src="./src/assets/imgs/registro-postman.png"/></h1> <br>
+<h1><img src="./src/assets/imgs/confirmarCodigo-postman.png"/></h1> <br>
+<h1><img src="./src/assets/imgs/reenviarCodifo-postman.png"/></h1><br>
+<h1><img src="./src/assets/imgs/Login-postman.png"/></h1>
+
 ## componentes
 
 <h1><img src="./src/assets/imgs/subir-doc-front.png"/></h1>

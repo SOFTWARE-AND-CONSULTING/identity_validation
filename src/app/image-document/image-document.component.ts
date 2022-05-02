@@ -35,40 +35,110 @@ export class ImageDocumentComponent implements OnInit {
     private router: Router,) { }
 
   async ngOnInit() {
-    const body = {
-      email: environment.ELOGIN,
-      password: environment.PLOGIN
-    }
-    await this.apiService.post('login', body, '').subscribe(
-      async (res: any) => {
 
-        if (res.status == false) toastFire.toastFireError(res);
-        else {
-          this.token = res.data
-          localStorage.setItem('token', `${this.token}`)
+    /* Crear un usuario para generar luego el token*/
+    //this.registro()
 
-        }
-      },
-      (error: any) => {
-        console.log('error enviando documento', error);
-        toastFire.toastFireError(error);
-      }
-    );
+    /* verificar código */
+    //this.verificarEmail();
+
+    /* pedir nuevamente el código */
+    //this.reSendCode()
+
+    /* Login con el usuario creado */
+    this.login()
   }
 
-  async incomingfile(event:any) {
+async login(){
+  const body = {
+    email: environment.ELOGIN,
+    password: environment.PLOGIN
+  }
+  await this.apiService.post('login', body, '').subscribe(
+    async (res: any) => {
 
-    this.file = event.target.files[0];
+      if (res.status == false) toastFire.toastFireError(res);
+      else {
+        this.token = res.data
+        localStorage.setItem('token', `${this.token}`)
 
-    this.extraerBase64(this.file).then((imagen:any) => {
-      this.preview = imagen.base;
-
-
-
-    })
-
-
+      }
+    },
+    (error: any) => {
+      console.log('error enviando documento', error);
+      toastFire.toastFireError(error);
+    }
+  );
 }
+
+async registro(){
+  const data = {
+    email:environment.ELOGIN,
+    password:environment.PLOGIN,
+    name:"demo",
+    address: "direccion demo"
+}
+  await this.apiService.post('sign-up', data, '').subscribe(
+    async (res: any) => {
+
+      if (res.status == false) toastFire.toastFireError(res);
+      else {
+        console.log(res);
+
+
+      }
+    },
+    (error: any) => {
+      console.log('error enviando documento', error);
+      toastFire.toastFireError(error);
+    }
+  );
+}
+
+async verificarEmail(){
+  const verificar = {
+      email:environment.ELOGIN,
+      code: 123456
+  }
+  await this.apiService.post('confirm-code', verificar, '').subscribe(
+    async (res: any) => {
+
+      if (res.status == false) toastFire.toastFireError(res);
+      else {
+        console.log(res);
+
+
+      }
+    },
+    (error: any) => {
+      console.log('error enviando documento', error);
+      toastFire.toastFireError(error);
+    }
+  );
+}
+async reSendCode(){
+  const reSend = {
+      email:environment.ELOGIN,
+  }
+  await this.apiService.post('resend-code', reSend, '').subscribe(
+    async (res: any) => {
+
+      if (res.status == false) toastFire.toastFireError(res);
+      else {
+        console.log(res);
+
+
+      }
+    },
+    (error: any) => {
+      console.log('error enviando documento', error);
+      toastFire.toastFireError(error);
+    }
+  );
+}
+
+
+
 atras(){
   this.file = null;
   this.preview = '';
@@ -76,6 +146,16 @@ atras(){
   this.documentsOk = false;
   this.imageFront = !this.imageFront;
   this.filesUploadFront = [];
+}
+
+async incomingfile(event:any) {
+
+  this.file = event.target.files[0];
+
+  this.extraerBase64(this.file).then((imagen:any) => {
+    this.preview = imagen.base;
+  })
+
 }
 
 
