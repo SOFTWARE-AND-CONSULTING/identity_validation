@@ -18,17 +18,17 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 El proyecta tiene la siguiente estructura de carpetas:
 
-faces-recognition
-  -src
-    -app
-      -finalización-proceso
-      -guards
-      -image-document
-      -recoknition
-      -services
-      -video-player
-    -assets
-    -environments
+*faces-recognition
+  *src
+    *app
+      *finalización-proceso
+      *guards
+      *image-document
+      *recoknition
+      *services
+      *video-player
+    *assets
+    *environments
 
 ## componentes
 
