@@ -2,7 +2,7 @@
   <div class="img row justify-content-center" >
     <div class=" col-12">
 
-        <div class="col-12 title text-center" style="color: black;">
+        <div class="col-12 title text-center mt-5" style="color: black;">
           {{imageFront ? 'Suba la imagen frontal de la cédula': 'Suba la imagen posterior de la cédula'}}
 
         </div><br><br>
@@ -53,18 +53,20 @@
           <img style="border-radius: 20px"  width="250px" [src]="preview" alt="">
         </div><br>
         <div class="row mt-3 text-center">
+          <div class="{{imageFront ? 'col-12' : 'col-6'}} text-center" *ngIf="!imageFront || documentsOk">
+            <button type="submit"  class="btn btn-md " (click)="atras()" id="boton" style="color: #726adde6;"><i class="fa fa-hand-o-left" style="color: #726adde6;">
+              </i> Volver</button>
+          </div>
           <div class="{{imageFront ? 'col-12' : 'col-6'}} text-center" *ngIf="!documentsOk">
-            <button type="submit" [disabled]="!file" class="btn btn-md" id="boton" (click)="imageFront ? subirFrontal() : SubirImgT()" style="color: #726add;" ><i class="fa fa-save" style="color: #726add;">
+            <button type="submit" [disabled]="!file" class="btn btn-md" id="boton" (click)="imageFront ? subirFrontal() : SubirImgT()" style="color: #726add;" ><i class="fa fa-file-image-o" style="color: #726add;">
             </i> {{imageFront ? 'Subir imagen frontal': 'Subir imagen posterior'}}</button>
           </div>
+
           <div class="col-6 text-center" *ngIf="documentsOk">
-            <button type="submit" [disabled]="!file" class="btn btn-md" id="boton" (click)="SubirDocumentos()" style="color: #726add;" ><i class="fa fa-save" style="color: #726add;">
+            <button type="submit" [disabled]="!file" class="btn btn-md" id="boton" (click)="SubirDocumentos()" style="color: #726add;" ><i class="fa fa-file-video-o" style="color: #726add;">
             </i>  Ir a reconocimiento facial</button>
           </div>
-            <div class="{{imageFront ? 'col-12' : 'col-6'}} text-center" *ngIf="!imageFront || documentsOk">
-              <button type="submit"  class="btn btn-md " (click)="atras()" id="boton" style="color: #726adde6;"><i class="fa fa-save" style="color: #726adde6;">
-                </i> Volver</button>
-            </div>
+
         </div>
 
     </div>

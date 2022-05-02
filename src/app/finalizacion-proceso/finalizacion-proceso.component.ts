@@ -28,7 +28,8 @@ export class FinalizacionProcesoComponent implements OnInit {
       left top
       no-repeat
     `
-    }).then((result) => {
+    })
+    /* .then((result) => {
       if (result.isConfirmed) {
 
         this.videoElement.nativeElement.pause();
@@ -42,7 +43,7 @@ export class FinalizacionProcesoComponent implements OnInit {
         localStorage.setItem('validationId', '');
         window.location.reload();
       }
-    });
+    }); */
 
   }
 

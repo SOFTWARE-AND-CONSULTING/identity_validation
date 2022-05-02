@@ -50,7 +50,7 @@ $border-color: #f1f1f1;
     }
 
     .sidebar {
-      border-left: solid 1px $border-color;
+      border-left: solid 0px $border-color;
       //background-color: green;
       display: grid;
       /* grid-template-columns: 2fr 2fr; */
